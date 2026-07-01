@@ -511,7 +511,6 @@
     background var(--duration-base) var(--ease-smooth);
   animation: scale-in var(--duration-slow) var(--ease-bounce) both;
   position: relative;
-  group: true;
 }
 .shortcut-item:hover {
   transform: translateY(-4px) scale(1.03);
@@ -1213,6 +1212,7 @@
 }
 
 input[type="range"] {
+  appearance: none;
   -webkit-appearance: none;
   width: 100%;
   height: 4px;

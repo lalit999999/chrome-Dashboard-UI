@@ -656,7 +656,8 @@
 }
 
 .weather-icon-large {
-  font-size: 3rem;
+  width: 64px;
+  height: 64px;
   line-height: 1;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
   animation: anim-float 6s ease-in-out infinite;
@@ -669,6 +670,11 @@
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--text-primary);
+}
+.weather-feelslike {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
 }
 .weather-condition {
   font-size: 0.875rem;

@@ -32,3 +32,14 @@ Build a production-ready Google Chrome New Tab extension dashboard using a singl
 - Scoping: Write clean, self-documenting, asynchronous JavaScript. Ensure functions bound to dynamic DOM lists (like tasks) are securely scoped and do not leak memory.
 
 Provide the complete, production-ready source code for all four files separately. Ensure the code is production-grade, highly organized, and completely bug-free.
+
+
+
+
+removing the dark mode toggle button and wallpaper button and setting button from the top.
+Focus Timer is  not working .weather data is not fetching.
+calander is not working and showing also calander will showing the strik.
+
+quots are not fetching.
+
+removing the quick links from the dashboard.

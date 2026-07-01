@@ -1,5 +1,5 @@
 import { $, pad, toast } from './utils.js';
-import { timerStore, settingsStore } from './storage.js';
+import { timerStore, settingsStore, timerStateStore } from './storage.js';
 
 const MODES = {
   pomodoro: { label: 'Focus',       minutes: 25, color: '#3b82f6' },
@@ -15,17 +15,57 @@ let state = {
   total:     25 * 60,
   remaining: 25 * 60,
   running:   false,
-  interval:  null,
+  endAt:     null,
   sessions:  0,
 };
+
+let intervalId = null;
 
 export function initTimer() {
   const saved = timerStore.get();
   state.sessions = saved.dailySessions || 0;
+
+  restoreState();
   renderTimer();
   bindUI();
-  updateRing(1);
+  updateRing(state.total ? state.remaining / state.total : 1);
+  updateRingColor(MODES[state.mode].color);
+  updateStartBtn();
   updateStats();
+
+  if (state.running) {
+    $(`#timer-ring`)?.closest('.timer-widget')?.classList.add('timer-active');
+    runInterval();
+  }
+}
+
+function restoreState() {
+  const persisted = timerStateStore.get();
+  if (!persisted || !MODES[persisted.mode]) return;
+
+  state.mode  = persisted.mode;
+  state.total = persisted.total || MODES[state.mode].minutes * 60;
+
+  if (persisted.running && persisted.endAt) {
+    const remaining = Math.round((persisted.endAt - Date.now()) / 1000);
+    state.remaining = Math.max(0, remaining);
+    state.running   = state.remaining > 0;
+    state.endAt      = state.running ? persisted.endAt : null;
+  } else {
+    state.remaining = Math.min(persisted.remaining ?? state.total, state.total);
+    state.running   = false;
+    state.endAt      = null;
+  }
+}
+
+function persistState() {
+  timerStateStore.save({
+    mode:      state.mode,
+    total:     state.total,
+    remaining: state.remaining,
+    running:   state.running,
+    endAt:     state.endAt,
+  });
 }
 
 function bindUI() {
@@ -54,43 +94,62 @@ function toggle() {
 function start() {
   if (state.remaining <= 0) reset();
   state.running = true;
+  state.endAt = Date.now() + state.remaining * 1000;
   updateStartBtn();
   $(`#timer-ring`)?.closest('.timer-widget')?.classList.add('timer-active');
+  persistState();
+  runInterval();
+}
 
-  state.interval = setInterval(() => {
-    state.remaining--;
+function runInterval() {
+  if (intervalId) clearInterval(intervalId);
+
+  intervalId = setInterval(() => {
+    state.remaining = Math.max(0, Math.round((state.endAt - Date.now()) / 1000));
     renderTimer();
     updateRing(state.remaining / state.total);
 
     if (state.remaining <= 0) {
-      clearInterval(state.interval);
+      clearInterval(intervalId);
+      intervalId = null;
       state.running = false;
+      state.endAt = null;
       onComplete();
+    } else {
+      persistState();
     }
   }, 1000);
 }
 
 function pause() {
-  clearInterval(state.interval);
+  if (intervalId) clearInterval(intervalId);
+  intervalId = null;
   state.running = false;
+  state.endAt = null;
   updateStartBtn();
   $(`#timer-ring`)?.closest('.timer-widget')?.classList.remove('timer-active');
+  persistState();
 }
 
 function reset() {
-  clearInterval(state.interval);
+  if (intervalId) clearInterval(intervalId);
+  intervalId = null;
   state.running = false;
+  state.endAt = null;
   state.remaining = state.total;
   renderTimer();
   updateRing(1);
   updateStartBtn();
   $(`#timer-ring`)?.closest('.timer-widget')?.classList.remove('timer-active');
+  persistState();
 }
 
 function setMode(mode) {
   if (!MODES[mode]) return;
-  clearInterval(state.interval);
+  if (intervalId) clearInterval(intervalId);
+  intervalId = null;
   state.running = false;
+  state.endAt = null;
   state.mode = mode;
   state.total = MODES[mode].minutes * 60;
   state.remaining = state.total;
@@ -98,6 +157,7 @@ function setMode(mode) {
   updateRing(1);
   updateStartBtn();
   updateRingColor(MODES[mode].color);
+  persistState();
 }
 
 function setCustom() {
@@ -107,14 +167,17 @@ function setCustom() {
     toast('Enter 1–180 minutes', 'error');
     return;
   }
-  clearInterval(state.interval);
+  if (intervalId) clearInterval(intervalId);
+  intervalId = null;
   state.running = false;
+  state.endAt = null;
   state.total = val * 60;
   state.remaining = state.total;
   if (input) input.value = '';
   renderTimer();
   updateRing(1);
   updateStartBtn();
+  persistState();
   toast(`Timer set to ${val} minutes`, 'info');
 }
 
@@ -125,6 +188,7 @@ function onComplete() {
   updateRing(0);
   $(`#timer-ring`)?.closest('.timer-widget')?.classList.remove('timer-active');
   updateStartBtn();
+  persistState();
 
   const settings = settingsStore.get();
 
@@ -160,6 +224,8 @@ function renderTimer() {
 
   const label = $('#timer-mode-label');
   if (label) label.textContent = MODES[state.mode]?.label || 'Focus';
+
+  $$('.timer-mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === state.mode));
 }
 
 function updateStartBtn() {

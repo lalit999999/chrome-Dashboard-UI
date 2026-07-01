@@ -7,22 +7,18 @@ import { initTasks }     from './tasks.js';
 import { initTimer }     from './timer.js';
 import { initQuotes }    from './quotes.js';
 import { initWeather }   from './weather.js';
-import { initWallpaper } from './wallpaper.js';
 import { initNotes }     from './notes.js';
-import { initShortcuts } from './shortcuts.js';
 import { initCalendar }  from './calendar.js';
 import { initFocus }     from './focus.js';
 import { initStats }     from './stats.js';
 import { initParticles } from './particles.js';
 
-import { $, $$, onKeydown, toast } from './utils.js';
-import { settingsStore, wallpaperStore } from './storage.js';
+import { $, $$, onKeydown } from './utils.js';
+import { settingsStore } from './storage.js';
 
 /* ── Bootstrap ── */
 document.addEventListener('DOMContentLoaded', () => {
-  applyTheme();
   initParticles();
-  initWallpaper();
   initClock();
   initFocus();
   initTasks();
@@ -30,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuotes();
   initWeather();
   initCalendar();
-  initShortcuts();
   initNotes();
   initStats();
   bindGlobalUI();
@@ -45,62 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/* ── Theme ── */
-function applyTheme() {
-  const { theme } = settingsStore.get();
-  document.documentElement.dataset.theme = theme || 'dark';
-}
-
-function toggleTheme() {
-  const current = document.documentElement.dataset.theme;
-  const next = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = next;
-  settingsStore.update({ theme: next });
-  updateThemeIcon(next);
-  toast(`${next === 'dark' ? 'Dark' : 'Light'} mode activated`, 'info');
-}
-
-function updateThemeIcon(theme) {
-  const btn = $('#theme-toggle');
-  if (!btn) return;
-  btn.innerHTML = theme === 'dark'
-    ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-         <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
-         <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-         <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
-         <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-       </svg>`
-    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-       </svg>`;
-}
-
 /* ── Global UI Bindings ── */
 function bindGlobalUI() {
-  /* Theme toggle */
-  $('#theme-toggle')?.addEventListener('click', toggleTheme);
-  updateThemeIcon(settingsStore.get().theme || 'dark');
-
-  /* Wallpaper panel */
-  const wallPanel = $('#wallpaper-panel');
-  const overlay   = $('#panel-overlay');
-
-  $('#wallpaper-toggle')?.addEventListener('click', () => {
-    wallPanel?.classList.toggle('open');
-    overlay?.classList.toggle('visible');
-  });
-
-  overlay?.addEventListener('click', () => {
-    wallPanel?.classList.remove('open');
-    overlay?.classList.remove('visible');
-  });
-
-  $('#close-wallpaper-panel')?.addEventListener('click', () => {
-    wallPanel?.classList.remove('open');
-    overlay?.classList.remove('visible');
-  });
-
   /* Search */
   const searchInput = $('#search-input');
   searchInput?.addEventListener('keydown', e => {
@@ -164,18 +105,6 @@ function registerKeyboardShortcuts() {
       $('#timer-start')?.click();
     }
   });
-
-  /* D → toggle theme */
-  onKeydown(['ctrl+shift+d'], e => {
-    e.preventDefault();
-    toggleTheme();
-  });
-
-  /* Escape → close panels */
-  onKeydown(['escape'], () => {
-    $('#wallpaper-panel')?.classList.remove('open');
-    $('#panel-overlay')?.classList.remove('visible');
-  });
 }
 
 /* ── Notifications ── */
@@ -185,5 +114,3 @@ function requestNotificationPermission() {
     setTimeout(() => Notification.requestPermission(), 3000);
   }
 }
-
-function $$( sel ) { return [...document.querySelectorAll(sel)]; }

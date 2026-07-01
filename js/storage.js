@@ -80,6 +80,11 @@ export const timerStore = {
   }
 };
 
+export const timerStateStore = {
+  get:    ()      => storage.get('timer_state', null),
+  save:   (data)  => storage.set('timer_state', data),
+};
+
 export const statsStore = {
   get:    ()           => storage.get('stats', { streak: 0, lastActive: null, weekly: new Array(7).fill(0) }),
   update: (patch)      => storage.update('stats', patch, { streak: 0, lastActive: null, weekly: new Array(7).fill(0) }),
@@ -109,40 +114,16 @@ export const focusStore = {
   save:   (data)  => storage.set('focus', data),
 };
 
-export const shortcutStore = {
-  getAll: ()         => storage.get('shortcuts', getDefaultShortcuts()),
-  save:   (links)    => storage.set('shortcuts', links),
-};
-
 export const settingsStore = {
   get:    ()      => storage.get('settings', getDefaultSettings()),
   update: (patch) => storage.update('settings', patch, getDefaultSettings()),
 };
 
-export const wallpaperStore = {
-  get:    ()      => storage.get('wallpaper', { active: 'gradient-1', blur: 0, brightness: 1, overlay: 0.6 }),
-  update: (patch) => storage.update('wallpaper', patch, { active: 'gradient-1', blur: 0, brightness: 1, overlay: 0.6 }),
-};
-
 /* ── Defaults ── */
 function getDefaultSettings() {
   return {
-    theme: 'dark',
     clockFormat: '12h',
     notifications: true,
     soundEnabled: true,
   };
-}
-
-function getDefaultShortcuts() {
-  return [
-    { id: 'github',   label: 'GitHub',   url: 'https://github.com',        icon: '🐙', color: '#333' },
-    { id: 'gmail',    label: 'Gmail',    url: 'https://mail.google.com',   icon: '📧', color: '#ea4335' },
-    { id: 'youtube',  label: 'YouTube',  url: 'https://youtube.com',       icon: '▶️', color: '#ff0000' },
-    { id: 'chatgpt',  label: 'ChatGPT',  url: 'https://chat.openai.com',   icon: '🤖', color: '#10a37f' },
-    { id: 'claude',   label: 'Claude',   url: 'https://claude.ai',         icon: '✨', color: '#6b4ef1' },
-    { id: 'calendar', label: 'Calendar', url: 'https://calendar.google.com', icon: '📅', color: '#1a73e8' },
-    { id: 'linkedin', label: 'LinkedIn', url: 'https://linkedin.com',      icon: '💼', color: '#0077b5' },
-    { id: 'notion',   label: 'Notion',   url: 'https://notion.so',         icon: '📝', color: '#333' },
-  ];
 }

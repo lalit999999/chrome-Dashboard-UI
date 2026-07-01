@@ -16,25 +16,17 @@
 .wallpaper-layer {
   position: absolute;
   inset: 0;
+  background: linear-gradient(135deg, #0a0b0f 0%, #1a1040 40%, #0f2060 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(var(--wallpaper-blur, 0px)) brightness(var(--wallpaper-brightness, 1));
-  transition: filter var(--duration-slow) var(--ease-smooth),
-              opacity var(--duration-slower) var(--ease-smooth);
-  will-change: filter;
-}
-
-.wallpaper-layer.transitioning {
-  animation: wallpaper-crossfade var(--duration-slower) var(--ease-smooth);
 }
 
 .bg-overlay {
   position: absolute;
   inset: 0;
   background: var(--bg-primary);
-  opacity: var(--overlay-opacity, 0.6);
-  transition: opacity var(--duration-slow) var(--ease-smooth);
+  opacity: 0.6;
 }
 
 /* ── Ambient Blobs ── */
@@ -139,7 +131,6 @@
 }
 
 .top-bar-left { display: flex; align-items: center; gap: var(--space-3); }
-.top-bar-right { display: flex; align-items: center; gap: var(--space-2); }
 
 /* ── Section Header ── */
 .section-header {
@@ -183,109 +174,6 @@
 .widget:hover {
   border-color: var(--glass-border-hover);
   box-shadow: var(--shadow-lg);
-}
-
-/* ── Panel Overlay ── */
-.panel-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: var(--z-overlay);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--duration-base) var(--ease-smooth);
-}
-.panel-overlay.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ── Slide Panel ── */
-.slide-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 400px;
-  background: var(--bg-secondary);
-  border-left: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-xl);
-  z-index: var(--z-modal);
-  transform: translateX(100%);
-  transition: transform var(--duration-slow) var(--ease-smooth);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.slide-panel.open { transform: translateX(0); }
-
-.slide-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-5) var(--space-6);
-  border-bottom: 1px solid var(--glass-border);
-}
-.slide-panel-header h3 { font-size: 1rem; font-weight: 600; }
-
-.slide-panel-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--space-5) var(--space-6);
-}
-
-/* ── Modal ── */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: var(--z-modal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-6);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--duration-base) var(--ease-smooth);
-}
-.modal-backdrop.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modal {
-  background: var(--bg-secondary);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
-  width: 100%;
-  max-width: 480px;
-  padding: var(--space-6);
-  transform: scale(0.92) translateY(8px);
-  transition: transform var(--duration-slow) var(--ease-bounce);
-}
-.modal-backdrop.visible .modal {
-  transform: scale(1) translateY(0);
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-5);
-}
-.modal-header h3 { font-size: 1.125rem; }
-
-.modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
 }
 
 /* ── Empty State ── */

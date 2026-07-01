@@ -223,27 +223,6 @@ svg { display: block; flex-shrink: 0; }
 }
 .btn:active::after { opacity: 1; }
 
-/* ── Input Base ── */
-.input-field {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: 0.9375rem;
-  transition:
-    border-color var(--duration-fast) var(--ease-smooth),
-    box-shadow var(--duration-fast) var(--ease-smooth),
-    background var(--duration-fast) var(--ease-smooth);
-}
-.input-field::placeholder { color: var(--text-muted); }
-.input-field:focus {
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px var(--accent-blue-dim);
-  background: var(--glass-bg-hover);
-}
-
 /* ── Badge ── */
 .badge {
   display: inline-flex;
@@ -259,13 +238,6 @@ svg { display: block; flex-shrink: 0; }
 .badge-med    { background: var(--warning-dim);  color: var(--warning);  }
 .badge-low    { background: var(--success-dim);  color: var(--success);  }
 .badge-blue   { background: var(--accent-blue-dim);  color: var(--accent-blue-light); }
-
-/* ── Divider ── */
-.divider {
-  height: 1px;
-  background: var(--glass-border);
-  margin: var(--space-4) 0;
-}
 
 /* ── Tooltip ── */
 [data-tooltip] {

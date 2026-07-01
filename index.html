@@ -1,438 +1,838 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Personal Productivity Workspace — New Tab Dashboard">
-  <title>Workspace</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Personal Productivity Workspace — New Tab Dashboard"
+    />
+    <title>Workspace</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
-</head>
-<body>
-
-<!-- ════════════════════════════════════════
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body>
+    <!-- ════════════════════════════════════════
      BACKGROUND LAYER
 ════════════════════════════════════════ -->
-<div id="app">
-  <div class="bg-layer" aria-hidden="true">
-    <div class="wallpaper-layer" id="wallpaper-layer"></div>
-    <div class="bg-overlay" id="bg-overlay"></div>
-    <canvas id="particles-canvas"></canvas>
-    <div class="ambient-blobs">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-    </div>
-  </div>
+    <div id="app">
+      <div class="bg-layer" aria-hidden="true">
+        <div class="wallpaper-layer" id="wallpaper-layer"></div>
+        <div class="bg-overlay" id="bg-overlay"></div>
+        <canvas id="particles-canvas"></canvas>
+        <div class="ambient-blobs">
+          <div class="blob blob-1"></div>
+          <div class="blob blob-2"></div>
+          <div class="blob blob-3"></div>
+        </div>
+      </div>
 
-  <!-- ════════════════════════════════════════
+      <!-- ════════════════════════════════════════
        MAIN DASHBOARD
   ════════════════════════════════════════ -->
-  <div class="dashboard">
-
-    <!-- ── LEFT: MAIN CONTENT ── -->
-    <main class="main-content" role="main">
-
-      <!-- Top Bar -->
-      <div class="top-bar animate-slide-up stagger-1" role="banner">
-        <div class="top-bar-left">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--grad-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5">
-              <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-              <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-            </svg>
-          </div>
-          <span style="font-size:0.875rem;font-weight:600;color:var(--text-secondary)">Workspace</span>
-        </div>
-      </div>
-
-      <!-- Search -->
-      <section class="search-section" aria-label="Search">
-        <div class="search-container">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input
-            type="search"
-            class="search-input"
-            id="search-input"
-            placeholder="Search Google or type a URL..."
-            autocomplete="off"
-            spellcheck="false"
-            aria-label="Search"
-          >
-          <div class="search-kbd" aria-hidden="true">
-            <span class="kbd">/</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Clock + Greeting -->
-      <section class="clock-section" aria-label="Clock">
-        <p class="greeting" id="greeting" aria-live="polite">Good Morning</p>
-        <div class="clock-display" role="timer" aria-label="Current time">
-          <span class="clock-time" id="clock-time">00:00</span>
-          <span class="clock-seconds" id="clock-seconds" aria-hidden="true">00</span>
-          <span class="clock-period" id="clock-period" aria-hidden="true">AM</span>
-        </div>
-        <p class="clock-date" id="clock-date" aria-live="polite"></p>
-      </section>
-
-      <!-- Today's Focus -->
-      <section class="focus-section" aria-label="Today's focus">
-        <div class="focus-widget">
-          <div class="focus-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
-            </svg>
-            Today's Focus
-          </div>
-          <div class="focus-input-wrapper">
-            <div class="task-checkbox focus-checkbox" id="focus-checkbox" role="checkbox" aria-checked="false" tabindex="0" aria-label="Mark focus complete">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            </div>
-            <input
-              type="text"
-              class="focus-input"
-              id="focus-input"
-              placeholder="What's the one thing you must accomplish today?"
-              maxlength="200"
-              aria-label="Today's main goal"
-            >
-          </div>
-          <div class="focus-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div class="focus-progress-fill" id="focus-progress-fill"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Task Manager -->
-      <section class="tasks-section" aria-label="Task manager">
-        <div class="tasks-widget">
-          <div class="section-header">
-            <div class="section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-              </svg>
-              Tasks
-            </div>
-            <button class="btn btn-ghost text-sm" id="clear-completed" aria-label="Clear completed tasks">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-              </svg>
-              Clear Done
-            </button>
-          </div>
-
-          <!-- Add Task Form -->
-          <div class="task-add-form" role="form" aria-label="Add new task">
-            <input
-              type="text"
-              class="task-add-input"
-              id="task-add-input"
-              placeholder="Add a new task..."
-              maxlength="300"
-              aria-label="New task text"
-            >
-            <select class="task-priority-select" id="task-priority" aria-label="Task priority">
-              <option value="high">🔴 High</option>
-              <option value="med" selected>🟡 Med</option>
-              <option value="low">🟢 Low</option>
-            </select>
-            <button class="btn btn-primary" id="task-add-btn" aria-label="Add task">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-              Add
-            </button>
-          </div>
-
-          <!-- Search + Filter -->
-          <div class="tasks-toolbar">
-            <div class="tasks-search-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-              </svg>
-              <input type="search" class="tasks-search" id="tasks-search" placeholder="Search tasks..." aria-label="Search tasks">
-            </div>
-          </div>
-
-          <div class="tasks-filter-tabs" role="tablist" aria-label="Filter tasks">
-            <button class="filter-tab active" data-filter="all"    role="tab" aria-selected="true">All</button>
-            <button class="filter-tab"        data-filter="active" role="tab" aria-selected="false">Active</button>
-            <button class="filter-tab"        data-filter="done"   role="tab" aria-selected="false">Done</button>
-          </div>
-
-          <!-- Task List -->
-          <div class="tasks-list" id="tasks-list" role="list" aria-label="Task list" aria-live="polite"></div>
-
-          <div class="tasks-count" aria-live="polite">
-            <span id="tasks-count">0 of 0 completed</span>
-          </div>
-        </div>
-      </section>
-
-    </main><!-- /main-content -->
-
-    <!-- ── RIGHT: SIDEBAR ── -->
-    <aside class="sidebar" role="complementary" aria-label="Productivity widgets">
-
-      <!-- Pomodoro Timer -->
-      <div class="timer-widget" role="region" aria-label="Pomodoro timer">
-        <div class="section-header" style="margin-bottom:var(--space-3)">
-          <div class="section-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-            </svg>
-            Focus Timer
-          </div>
-        </div>
-
-        <div class="timer-modes" role="tablist" aria-label="Timer mode">
-          <button class="timer-mode-btn active" data-mode="pomodoro" role="tab" aria-selected="true">Focus</button>
-          <button class="timer-mode-btn"        data-mode="short"    role="tab" aria-selected="false">Short</button>
-          <button class="timer-mode-btn"        data-mode="long"     role="tab" aria-selected="false">Long</button>
-        </div>
-
-        <div class="timer-ring-container" role="img" aria-label="Timer progress">
-          <svg class="timer-ring-svg" viewBox="0 0 120 120">
-            <defs>
-              <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop id="timerStop1" offset="0%"   stop-color="#3b82f6"/>
-                <stop id="timerStop2" offset="100%" stop-color="#8b5cf6"/>
-              </linearGradient>
-            </defs>
-            <circle class="timer-ring-bg" cx="60" cy="60" r="54"/>
-            <circle class="timer-ring-progress" id="timer-ring" cx="60" cy="60" r="54"
-              stroke-dasharray="339.29" stroke-dashoffset="0"/>
-          </svg>
-          <div class="timer-center">
-            <span class="timer-countdown" id="timer-countdown" aria-live="off">25:00</span>
-            <span class="timer-mode-label" id="timer-mode-label">Focus</span>
-          </div>
-        </div>
-
-        <div class="timer-controls">
-          <button class="timer-btn" id="timer-reset" aria-label="Reset timer" data-tooltip="Reset">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="1 4 1 10 7 10"/>
-              <path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
-            </svg>
-          </button>
-          <button class="timer-btn timer-btn-main" id="timer-start" aria-label="Start timer">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>
-          </button>
-          <div style="display:flex;align-items:center;gap:var(--space-2)">
-            <input type="number" id="timer-custom-input" placeholder="min" min="1" max="180"
-              style="width:56px;padding:var(--space-2) var(--space-2);background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md);color:var(--text-primary);font-size:0.8125rem;text-align:center;font-family:var(--font-sans);"
-              aria-label="Custom timer duration in minutes">
-            <button class="timer-btn" id="timer-custom-btn" aria-label="Set custom duration" data-tooltip="Set Custom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div class="timer-stats">
-          <div class="timer-stat-item">
-            <div class="timer-stat-value" id="timer-sessions">0</div>
-            <div class="timer-stat-label">Sessions Today</div>
-          </div>
-          <div class="timer-stat-item">
-            <div class="timer-stat-value" id="timer-focus-time">0m</div>
-            <div class="timer-stat-label">Focus Time</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Weather -->
-      <div class="weather-widget" role="region" aria-label="Weather">
-        <div class="section-header" style="margin-bottom:var(--space-3)">
-          <div class="section-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>
-            </svg>
-            Weather
-          </div>
-          <button class="btn-icon btn" id="weather-refresh" aria-label="Refresh weather" data-tooltip="Refresh">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="1 4 1 10 7 10"/>
-              <path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
-            </svg>
-          </button>
-        </div>
-        <div id="weather-body">
-          <div class="weather-main">
-            <div class="weather-icon-large" id="weather-icon" aria-hidden="true">🌡️</div>
-            <div class="weather-temp-wrap">
-              <div class="weather-temp" id="weather-temp">--°C</div>
-              <div class="weather-condition" id="weather-condition">Loading weather...</div>
-              <div class="weather-location">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+      <div class="dashboard">
+        <!-- ── LEFT: MAIN CONTENT ── -->
+        <main class="main-content" role="main">
+          <!-- Top Bar -->
+          <div class="top-bar animate-slide-up stagger-1" role="banner">
+            <div class="top-bar-left">
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  border-radius: 8px;
+                  background: var(--grad-primary);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-shrink: 0;
+                "
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2.5"
+                >
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
                 </svg>
-                <span id="weather-location">Detecting location...</span>
+              </div>
+              <span
+                style="
+                  font-size: 0.875rem;
+                  font-weight: 600;
+                  color: var(--text-secondary);
+                "
+                >Workspace</span
+              >
+            </div>
+          </div>
+
+          <!-- Search -->
+          <section class="search-section" aria-label="Search">
+            <div class="search-container">
+              <svg
+                class="search-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="search"
+                class="search-input"
+                id="search-input"
+                placeholder="Search Google or type a URL..."
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Search"
+              />
+              <div class="search-kbd" aria-hidden="true">
+                <span class="kbd">/</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Clock + Greeting -->
+          <section class="clock-section" aria-label="Clock">
+            <p class="greeting" id="greeting" aria-live="polite">
+              Good Morning
+            </p>
+            <div class="clock-display" role="timer" aria-label="Current time">
+              <span class="clock-time" id="clock-time">00:00</span>
+              <span class="clock-seconds" id="clock-seconds" aria-hidden="true"
+                >00</span
+              >
+              <span class="clock-period" id="clock-period" aria-hidden="true"
+                >AM</span
+              >
+            </div>
+            <p class="clock-date" id="clock-date" aria-live="polite"></p>
+          </section>
+
+          <!-- Today's Focus -->
+          <section class="focus-section" aria-label="Today's focus">
+            <div class="focus-widget">
+              <div class="focus-label">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                Today's Focus
+              </div>
+              <div class="focus-input-wrapper">
+                <div
+                  class="task-checkbox focus-checkbox"
+                  id="focus-checkbox"
+                  role="checkbox"
+                  aria-checked="false"
+                  tabindex="0"
+                  aria-label="Mark focus complete"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  class="focus-input"
+                  id="focus-input"
+                  placeholder="What's the one thing you must accomplish today?"
+                  maxlength="200"
+                  aria-label="Today's main goal"
+                />
+              </div>
+              <div
+                class="focus-progress"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <div class="focus-progress-fill" id="focus-progress-fill"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Task Manager -->
+          <section class="tasks-section" aria-label="Task manager">
+            <div class="tasks-widget">
+              <div class="section-header">
+                <div class="section-title">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                    />
+                  </svg>
+                  Tasks
+                </div>
+                <button
+                  class="btn btn-ghost text-sm"
+                  id="clear-completed"
+                  aria-label="Clear completed tasks"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+                  </svg>
+                  Clear Done
+                </button>
+              </div>
+
+              <!-- Add Task Form -->
+              <div class="task-add-form" role="form" aria-label="Add new task">
+                <input
+                  type="text"
+                  class="task-add-input"
+                  id="task-add-input"
+                  placeholder="Add a new task..."
+                  maxlength="300"
+                  aria-label="New task text"
+                />
+                <select
+                  class="task-priority-select"
+                  id="task-priority"
+                  aria-label="Task priority"
+                >
+                  <option value="high">🔴 High</option>
+                  <option value="med" selected>🟡 Med</option>
+                  <option value="low">🟢 Low</option>
+                </select>
+                <button
+                  class="btn btn-primary"
+                  id="task-add-btn"
+                  aria-label="Add task"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  Add
+                </button>
+              </div>
+
+              <!-- Search + Filter -->
+              <div class="tasks-toolbar">
+                <div class="tasks-search-wrap">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input
+                    type="search"
+                    class="tasks-search"
+                    id="tasks-search"
+                    placeholder="Search tasks..."
+                    aria-label="Search tasks"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="tasks-filter-tabs"
+                role="tablist"
+                aria-label="Filter tasks"
+              >
+                <button
+                  class="filter-tab active"
+                  data-filter="all"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  All
+                </button>
+                <button
+                  class="filter-tab"
+                  data-filter="active"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  Active
+                </button>
+                <button
+                  class="filter-tab"
+                  data-filter="done"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  Done
+                </button>
+              </div>
+
+              <!-- Task List -->
+              <div
+                class="tasks-list"
+                id="tasks-list"
+                role="list"
+                aria-label="Task list"
+                aria-live="polite"
+              ></div>
+
+              <div class="tasks-count" aria-live="polite">
+                <span id="tasks-count">0 of 0 completed</span>
+              </div>
+            </div>
+          </section>
+        </main>
+        <!-- /main-content -->
+
+        <!-- ── RIGHT: SIDEBAR ── -->
+        <aside
+          class="sidebar"
+          role="complementary"
+          aria-label="Productivity widgets"
+        >
+          <!-- Pomodoro Timer -->
+          <div class="timer-widget" role="region" aria-label="Pomodoro timer">
+            <div class="section-header" style="margin-bottom: var(--space-3)">
+              <div class="section-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                Focus Timer
+              </div>
+            </div>
+
+            <div class="timer-modes" role="tablist" aria-label="Timer mode">
+              <button
+                class="timer-mode-btn active"
+                data-mode="pomodoro"
+                role="tab"
+                aria-selected="true"
+              >
+                Focus
+              </button>
+              <button
+                class="timer-mode-btn"
+                data-mode="short"
+                role="tab"
+                aria-selected="false"
+              >
+                Short
+              </button>
+              <button
+                class="timer-mode-btn"
+                data-mode="long"
+                role="tab"
+                aria-selected="false"
+              >
+                Long
+              </button>
+            </div>
+
+            <div
+              class="timer-ring-container"
+              role="img"
+              aria-label="Timer progress"
+            >
+              <svg class="timer-ring-svg" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient
+                    id="timerGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop id="timerStop1" offset="0%" stop-color="#3b82f6" />
+                    <stop id="timerStop2" offset="100%" stop-color="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+                <circle class="timer-ring-bg" cx="60" cy="60" r="54" />
+                <circle
+                  class="timer-ring-progress"
+                  id="timer-ring"
+                  cx="60"
+                  cy="60"
+                  r="54"
+                  stroke-dasharray="339.29"
+                  stroke-dashoffset="0"
+                />
+              </svg>
+              <div class="timer-center">
+                <span
+                  class="timer-countdown"
+                  id="timer-countdown"
+                  aria-live="off"
+                  >25:00</span
+                >
+                <span class="timer-mode-label" id="timer-mode-label"
+                  >Focus</span
+                >
+              </div>
+            </div>
+
+            <div class="timer-controls">
+              <button
+                class="timer-btn"
+                id="timer-reset"
+                aria-label="Reset timer"
+                data-tooltip="Reset"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+                </svg>
+              </button>
+              <button
+                class="timer-btn timer-btn-main"
+                id="timer-start"
+                aria-label="Start timer"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21" />
+                </svg>
+              </button>
+              <div
+                style="display: flex; align-items: center; gap: var(--space-2)"
+              >
+                <input
+                  type="number"
+                  id="timer-custom-input"
+                  placeholder="min"
+                  min="1"
+                  max="180"
+                  style="
+                    width: 56px;
+                    padding: var(--space-2) var(--space-2);
+                    background: var(--glass-bg);
+                    border: 1px solid var(--glass-border);
+                    border-radius: var(--radius-md);
+                    color: var(--text-primary);
+                    font-size: 0.8125rem;
+                    text-align: center;
+                    font-family: var(--font-sans);
+                  "
+                  aria-label="Custom timer duration in minutes"
+                />
+                <button
+                  class="timer-btn"
+                  id="timer-custom-btn"
+                  aria-label="Set custom duration"
+                  data-tooltip="Set Custom"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="timer-stats">
+              <div class="timer-stat-item">
+                <div class="timer-stat-value" id="timer-sessions">0</div>
+                <div class="timer-stat-label">Sessions Today</div>
+              </div>
+              <div class="timer-stat-item">
+                <div class="timer-stat-value" id="timer-focus-time">0m</div>
+                <div class="timer-stat-label">Focus Time</div>
               </div>
             </div>
           </div>
-          <div class="weather-details">
-            <div class="weather-detail-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>
-              </svg>
-              <div><div style="font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em">Humidity</div>
-              <strong id="weather-humidity">--%</strong></div>
+
+          <!-- Weather -->
+          <div class="weather-widget" role="region" aria-label="Weather">
+            <div class="section-header" style="margin-bottom: var(--space-3)">
+              <div class="section-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" />
+                </svg>
+                Weather
+              </div>
+              <button
+                class="btn-icon btn"
+                id="weather-refresh"
+                aria-label="Refresh weather"
+                data-tooltip="Refresh"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+                </svg>
+              </button>
             </div>
-            <div class="weather-detail-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/>
+            <div id="weather-body">
+              <div class="weather-main">
+                <div
+                  class="weather-icon-large"
+                  id="weather-icon"
+                  aria-hidden="true"
+                >
+                  🌡️
+                </div>
+                <div class="weather-temp-wrap">
+                  <div class="weather-temp" id="weather-temp">--°C</div>
+                  <div class="weather-condition" id="weather-condition">
+                    Loading weather...
+                  </div>
+                  <div class="weather-location">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span id="weather-location">Detecting location...</span>
+                  </div>
+                </div>
+              </div>
+              <div class="weather-details">
+                <div class="weather-detail-item">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
+                  </svg>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.65rem;
+                        color: var(--text-tertiary);
+                        text-transform: uppercase;
+                        letter-spacing: 0.06em;
+                      "
+                    >
+                      Humidity
+                    </div>
+                    <strong id="weather-humidity">--%</strong>
+                  </div>
+                </div>
+                <div class="weather-detail-item">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"
+                    />
+                  </svg>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.65rem;
+                        color: var(--text-tertiary);
+                        text-transform: uppercase;
+                        letter-spacing: 0.06em;
+                      "
+                    >
+                      Wind
+                    </div>
+                    <strong id="weather-wind">-- km/h</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="weather-loading"
+              style="
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: var(--space-4);
+              "
+            >
+              <svg
+                class="anim-spin"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12a9 9 0 11-6.219-8.56" />
               </svg>
-              <div><div style="font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em">Wind</div>
-              <strong id="weather-wind">-- km/h</strong></div>
             </div>
           </div>
-        </div>
-        <div id="weather-loading" style="display:none;align-items:center;justify-content:center;padding:var(--space-4)">
-          <svg class="anim-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12a9 9 0 11-6.219-8.56"/>
-          </svg>
-        </div>
+
+          <!-- Calendar -->
+          <div class="calendar-widget" role="region" aria-label="Calendar">
+            <div class="calendar-nav">
+              <button
+                class="calendar-nav-btn"
+                id="cal-prev"
+                aria-label="Previous month"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <span class="calendar-month-year" id="cal-month-year"></span>
+              <button
+                class="calendar-nav-btn"
+                id="cal-next"
+                aria-label="Next month"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="calendar-weekdays" role="row" aria-hidden="true">
+              <div class="calendar-weekday">Su</div>
+              <div class="calendar-weekday">Mo</div>
+              <div class="calendar-weekday">Tu</div>
+              <div class="calendar-weekday">We</div>
+              <div class="calendar-weekday">Th</div>
+              <div class="calendar-weekday">Fr</div>
+              <div class="calendar-weekday">Sa</div>
+            </div>
+            <div
+              class="calendar-days"
+              id="cal-days"
+              role="grid"
+              aria-label="Calendar days"
+            ></div>
+          </div>
+
+          <!-- Quote -->
+          <div class="quote-widget" role="region" aria-label="Quote of the day">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <div class="quote-content" id="quote-content">
+              <p class="quote-text" id="quote-text">Loading quote...</p>
+              <p class="quote-author" id="quote-author"></p>
+            </div>
+            <div class="quote-footer">
+              <button
+                class="btn-icon btn"
+                id="quote-refresh"
+                aria-label="Get new quote"
+                data-tooltip="New Quote"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="notes-widget" role="region" aria-label="Quick notes">
+            <div class="section-header" style="margin-bottom: var(--space-3)">
+              <div class="section-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+                Notes
+              </div>
+            </div>
+            <textarea
+              class="notes-textarea"
+              id="notes-textarea"
+              placeholder="Jot down quick thoughts, ideas, or reminders... (supports markdown-style formatting)"
+              aria-label="Quick notes"
+              maxlength="2000"
+            ></textarea>
+            <div class="notes-footer">
+              <span class="notes-char-count" id="notes-char-count"
+                >0 / 2000</span
+              >
+              <div
+                class="notes-saved-indicator"
+                id="notes-saved"
+                aria-live="polite"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Saved
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Stats -->
+          <div class="stats-widget" role="region" aria-label="Daily statistics">
+            <div class="section-header" style="margin-bottom: var(--space-3)">
+              <div class="section-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                </svg>
+                Stats
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-card-value accent" id="stat-completed">0</div>
+                <div class="stat-card-label">Tasks Done</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-value" id="stat-focus-time">0</div>
+                <div class="stat-card-label">Focus Mins</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-value" id="stat-sessions">0</div>
+                <div class="stat-card-label">Pomodoros</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-value accent" id="stat-streak">0</div>
+                <div class="stat-card-label">Day Streak 🔥</div>
+              </div>
+            </div>
+
+            <div class="weekly-chart">
+              <div class="weekly-chart-label">This Week</div>
+              <div class="chart-bars" id="chart-bars"></div>
+            </div>
+          </div>
+        </aside>
+        <!-- /sidebar -->
       </div>
+      <!-- /dashboard -->
 
-      <!-- Calendar -->
-      <div class="calendar-widget" role="region" aria-label="Calendar">
-        <div class="calendar-nav">
-          <button class="calendar-nav-btn" id="cal-prev" aria-label="Previous month">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
-          </button>
-          <span class="calendar-month-year" id="cal-month-year"></span>
-          <button class="calendar-nav-btn" id="cal-next" aria-label="Next month">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
-          </button>
-        </div>
-        <div class="calendar-weekdays" role="row" aria-hidden="true">
-          <div class="calendar-weekday">Su</div>
-          <div class="calendar-weekday">Mo</div>
-          <div class="calendar-weekday">Tu</div>
-          <div class="calendar-weekday">We</div>
-          <div class="calendar-weekday">Th</div>
-          <div class="calendar-weekday">Fr</div>
-          <div class="calendar-weekday">Sa</div>
-        </div>
-        <div class="calendar-days" id="cal-days" role="grid" aria-label="Calendar days"></div>
-      </div>
+      <!-- Toast Container -->
+      <div
+        id="toast-container"
+        role="status"
+        aria-live="polite"
+        aria-atomic="false"
+      ></div>
+    </div>
+    <!-- /app -->
 
-      <!-- Quote -->
-      <div class="quote-widget" role="region" aria-label="Quote of the day">
-        <span class="quote-mark" aria-hidden="true">"</span>
-        <div class="quote-content" id="quote-content">
-          <p class="quote-text" id="quote-text">Loading quote...</p>
-          <p class="quote-author" id="quote-author"></p>
-        </div>
-        <div class="quote-footer">
-          <button class="btn-icon btn" id="quote-refresh" aria-label="Get new quote" data-tooltip="New Quote">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="1 4 1 10 7 10"/>
-              <path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Notes -->
-      <div class="notes-widget" role="region" aria-label="Quick notes">
-        <div class="section-header" style="margin-bottom:var(--space-3)">
-          <div class="section-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-            </svg>
-            Notes
-          </div>
-        </div>
-        <textarea
-          class="notes-textarea"
-          id="notes-textarea"
-          placeholder="Jot down quick thoughts, ideas, or reminders... (supports markdown-style formatting)"
-          aria-label="Quick notes"
-          maxlength="2000"
-        ></textarea>
-        <div class="notes-footer">
-          <span class="notes-char-count" id="notes-char-count">0 / 2000</span>
-          <div class="notes-saved-indicator" id="notes-saved" aria-live="polite">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            Saved
-          </div>
-        </div>
-      </div>
-
-      <!-- Daily Stats -->
-      <div class="stats-widget" role="region" aria-label="Daily statistics">
-        <div class="section-header" style="margin-bottom:var(--space-3)">
-          <div class="section-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
-              <line x1="6" y1="20" x2="6" y2="14"/>
-            </svg>
-            Stats
-          </div>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-card-value accent" id="stat-completed">0</div>
-            <div class="stat-card-label">Tasks Done</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-value" id="stat-focus-time">0</div>
-            <div class="stat-card-label">Focus Mins</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-value" id="stat-sessions">0</div>
-            <div class="stat-card-label">Pomodoros</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-value accent" id="stat-streak">0</div>
-            <div class="stat-card-label">Day Streak 🔥</div>
-          </div>
-        </div>
-
-        <div class="weekly-chart">
-          <div class="weekly-chart-label">This Week</div>
-          <div class="chart-bars" id="chart-bars"></div>
-        </div>
-      </div>
-
-    </aside><!-- /sidebar -->
-
-  </div><!-- /dashboard -->
-
-  <!-- Toast Container -->
-  <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
-
-</div><!-- /app -->
-
-<!-- JS Modules -->
-<script type="module" src="js/app.js"></script>
-</body>
+    <!-- JS Modules -->
+    <script type="module" src="js/app.js"></script>
+  </body>
 </html>

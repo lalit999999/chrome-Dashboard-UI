@@ -91,12 +91,8 @@
   --duration-slower: 600ms;
 
   /* ── Z-Index ── */
-  --z-base:    1;
-  --z-card:    10;
-  --z-header:  20;
-  --z-overlay: 50;
-  --z-modal:   100;
-  --z-toast:   200;
+  --z-base:  1;
+  --z-toast: 200;
 
   /* ── Font ── */
   --font-sans:  'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

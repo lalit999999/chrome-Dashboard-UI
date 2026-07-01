@@ -66,8 +66,6 @@
 
   .stats-grid { grid-template-columns: 1fr 1fr; }
 
-  .slide-panel { width: 100%; }
-
   .search-kbd { display: none; }
 }
 
@@ -78,12 +76,6 @@
   .clock-time { font-size: 3rem; }
   .clock-seconds { font-size: 1.25rem; }
 
-  .shortcuts-grid {
-    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-  }
-
-  .wallpaper-grid { grid-template-columns: 1fr; }
-
   .tasks-filter-tabs { flex-wrap: wrap; }
 
   .timer-ring-container { width: 140px; height: 140px; }
@@ -91,16 +83,13 @@
   .timer-countdown { font-size: 1.75rem; }
 
   .stats-grid { grid-template-columns: 1fr; }
-
-  .modal { padding: var(--space-4); }
-  .modal-backdrop { padding: var(--space-3); }
 }
 
 /* ── Print ── */
 @media print {
   .bg-layer, .ambient-blobs, #particles-canvas,
-  .top-bar, .search-section, .wallpaper-panel,
-  .timer-widget, .slide-panel { display: none; }
+  .top-bar, .search-section,
+  .timer-widget { display: none; }
 
   .dashboard {
     grid-template-columns: 1fr;

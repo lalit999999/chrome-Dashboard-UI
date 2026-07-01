@@ -1,0 +1,34 @@
+You are an expert Frontend Engineer and UI/UX Designer specialized in creating enterprise-grade, minimalist developer tools. 
+
+Build a production-ready Google Chrome New Tab extension dashboard using a single-folder architecture containing exactly four files: `manifest.json`, `index.html`, `style.css`, and `script.js`. Use strict vanilla component patterns (no external frameworks like React/Vue, and no external CSS libraries like Tailwind).
+
+### 🎨 Visual & UI/UX Specifications
+- Aesthetic: Modern dark-mode "Glassmorphism" layout layered over a high-resolution hero background.
+- Elements: Use translucent cards (`background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(16px);`) with subtle micro-borders (`1px solid rgba(255,255,255,0.1)`) and deep focal shadows.
+- Layout: A dual-column grid system (Main Focus Area on the left, Utility Sidebar Panel on the right).
+- Interactive States: Smooth, high-fidelity CSS transitions (`transition: all 0.3s ease;`) on all inputs, hover triggers, and wallpaper shifts.
+
+### ⚙️ Core Functional Modules Required
+1. Dynamic Chronometer & Contextual Greeting: A large real-time clock engine with an adaptive header greeting that automatically scales across "Good Morning", "Good Afternoon", and "Good Evening" thresholds based on system time.
+
+
+2. Daily Strategic KPI (Focus Goal): An elegant toggle container prompting the user for their primary metric/goal of the day. Upon submission, hide the entry state and show a persistent focal objective with "Complete" (strikethrough state) and "Erase" actions.
+
+
+3. Asynchronous Pomodoro Engine: A functional time-blocking module hardcoded to a 25-minute cycle. Include Start, Pause, and Reset states, visual countdown rendering, and a browser-native completion alert.
+
+
+4. Curated Insight Engine (Quotes): A content block rendering localized inspirational content. Include a functional refresh trigger that cycles through an internal data matrix smoothly without page reloads.
+
+
+5. Persistent Task Ledger (To-Do Management): A full-featured task queue supporting adding items, interactive status toggles (marking complete), and destructive deletes.
+
+
+6. Canvas Personalization Matrix (Wallpaper Thumbnails): A dedicated graphical grid serving as a wallpaper selection window. Display multiple localized, rounded mini-thumbnails. Clicking a thumbnail must seamlessly transition the entire document's background image.
+
+### 💾 Architecture & State Persistence Constraints
+- State Hydration: Every single module state (Incomplete/Complete Tasks, active Daily Focus KPIs, and selected Wallpaper configurations) MUST persist securely across tab closures and system reboots.
+- Storage Layer: Utilize the modern `chrome.storage.local` API framework rather than basic web localStorage to comply with modern Chrome Manifest V3 security rules.
+- Scoping: Write clean, self-documenting, asynchronous JavaScript. Ensure functions bound to dynamic DOM lists (like tasks) are securely scoped and do not leak memory.
+
+Provide the complete, production-ready source code for all four files separately. Ensure the code is production-grade, highly organized, and completely bug-free.

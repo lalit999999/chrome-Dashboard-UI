@@ -1,0 +1,115 @@
+/* ── 1400px: comfortable large desktop ── */
+@media (max-width: 1400px) {
+  .dashboard {
+    grid-template-columns: 1fr 360px;
+    gap: var(--space-5);
+    padding: var(--space-6) var(--space-6);
+  }
+}
+
+/* ── 1200px: standard desktop ── */
+@media (max-width: 1200px) {
+  .dashboard {
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-5);
+  }
+
+  .shortcuts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  }
+
+  .clock-time { font-size: clamp(3.5rem, 7vw, 6rem); }
+}
+
+/* ── 1024px: iPad landscape / small desktop ── */
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    max-width: 800px;
+    padding: var(--space-5) var(--space-5);
+  }
+
+  .sidebar {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .timer-widget { grid-column: 1; grid-row: 1; }
+  .weather-widget { grid-column: 2; grid-row: 1; }
+  .calendar-widget { grid-column: 1; grid-row: 2; }
+  .quote-widget { grid-column: 2; grid-row: 2; }
+  .notes-widget { grid-column: 1 / -1; }
+  .stats-widget { grid-column: 1 / -1; }
+}
+
+/* ── 768px: tablet portrait ── */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: var(--space-4) var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    border-radius: var(--radius-xl);
+  }
+
+  .clock-time { font-size: 3.5rem; }
+  .clock-seconds { font-size: 1.5rem; }
+
+  .tasks-toolbar { flex-wrap: wrap; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  .slide-panel { width: 100%; }
+
+  .search-kbd { display: none; }
+}
+
+/* ── 480px: mobile ── */
+@media (max-width: 480px) {
+  .dashboard { padding: var(--space-3) var(--space-3); }
+
+  .clock-time { font-size: 3rem; }
+  .clock-seconds { font-size: 1.25rem; }
+
+  .shortcuts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  }
+
+  .wallpaper-grid { grid-template-columns: 1fr; }
+
+  .tasks-filter-tabs { flex-wrap: wrap; }
+
+  .timer-ring-container { width: 140px; height: 140px; }
+  .timer-ring-svg { width: 140px; height: 140px; }
+  .timer-countdown { font-size: 1.75rem; }
+
+  .stats-grid { grid-template-columns: 1fr; }
+
+  .modal { padding: var(--space-4); }
+  .modal-backdrop { padding: var(--space-3); }
+}
+
+/* ── Print ── */
+@media print {
+  .bg-layer, .ambient-blobs, #particles-canvas,
+  .top-bar, .search-section, .wallpaper-panel,
+  .timer-widget, .slide-panel { display: none; }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .sidebar { display: block; }
+}

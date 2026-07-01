@@ -1,0 +1,358 @@
+/* ══════════════════════════════════════════
+   KEYFRAMES
+══════════════════════════════════════════ */
+
+/* Page Load */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scale-bounce {
+  0%   { transform: scale(0.8); opacity: 0; }
+  60%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Clock Digit Flip */
+@keyframes digit-flip-in {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes digit-flip-out {
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+
+/* Blob Float */
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%       { transform: translate(30px, -40px) scale(1.05); }
+  50%       { transform: translate(-20px, 20px) scale(0.95); }
+  75%       { transform: translate(40px, 10px) scale(1.02); }
+}
+
+/* Gradient Shift */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Pulse */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+  50%       { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* Spin */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+/* Timer Ring */
+@keyframes ring-appear {
+  from { stroke-dashoffset: 283; opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ring-tick {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.01); }
+  100% { transform: scale(1); }
+}
+
+/* Progress Bar Fill */
+@keyframes progress-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes progress-shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+/* Task Complete */
+@keyframes task-complete {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.96); }
+  70%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes strikethrough {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes check-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Quote Fade */
+@keyframes quote-fade-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Wallpaper crossfade */
+@keyframes wallpaper-crossfade {
+  0%   { opacity: 0; filter: blur(20px); }
+  100% { opacity: 1; filter: blur(var(--wallpaper-blur, 0px)); }
+}
+
+/* Toast */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(8px) scale(0.95); }
+}
+
+/* Confetti */
+@keyframes confetti-fall {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(200px) rotate(720deg) scale(0); opacity: 0; }
+}
+
+/* Shimmer */
+@keyframes skeleton-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* Number count-up */
+@keyframes number-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); color: var(--accent-blue-light); }
+  100% { transform: scale(1); }
+}
+
+/* Border gradient rotate */
+@keyframes border-rotate {
+  to { --angle: 360deg; }
+}
+
+/* Notification bell shake */
+@keyframes bell-shake {
+  0%, 100% { transform: rotate(0); }
+  20%       { transform: rotate(15deg); }
+  40%       { transform: rotate(-12deg); }
+  60%       { transform: rotate(8deg); }
+  80%       { transform: rotate(-5deg); }
+}
+
+/* ══════════════════════════════════════════
+   ANIMATION UTILITY CLASSES
+══════════════════════════════════════════ */
+
+.animate-fade-in    { animation: fade-in var(--duration-base) var(--ease-smooth) both; }
+.animate-slide-up   { animation: slide-up var(--duration-slow) var(--ease-bounce) both; }
+.animate-scale-in   { animation: scale-in var(--duration-slow) var(--ease-bounce) both; }
+
+/* Stagger delays */
+.stagger-1  { animation-delay: 50ms; }
+.stagger-2  { animation-delay: 100ms; }
+.stagger-3  { animation-delay: 150ms; }
+.stagger-4  { animation-delay: 200ms; }
+.stagger-5  { animation-delay: 250ms; }
+.stagger-6  { animation-delay: 300ms; }
+.stagger-7  { animation-delay: 350ms; }
+.stagger-8  { animation-delay: 400ms; }
+.stagger-9  { animation-delay: 450ms; }
+.stagger-10 { animation-delay: 500ms; }
+
+/* Hover state helpers */
+.hover-lift {
+  transition: transform var(--duration-base) var(--ease-smooth),
+              box-shadow var(--duration-base) var(--ease-smooth);
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-scale {
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+.hover-scale:hover { transform: scale(1.03); }
+
+/* Continuous animations */
+.anim-spin   { animation: spin 1s linear infinite; }
+.anim-pulse  { animation: pulse-dot 2s ease-in-out infinite; }
+.anim-float  { animation: blob-float 6s ease-in-out infinite; }
+
+/* ══════════════════════════════════════════
+   COMPONENT-SPECIFIC ANIMATIONS
+══════════════════════════════════════════ */
+
+/* Clock */
+.clock-digit-wrapper {
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.clock-digit-inner {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Checkbox animation */
+.task-checkbox {
+  position: relative;
+  width: 20px; height: 20px;
+  border: 2px solid var(--glass-border-hover);
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-smooth),
+    background var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-bounce);
+  flex-shrink: 0;
+}
+
+.task-checkbox:hover {
+  border-color: var(--accent-blue);
+  transform: scale(1.1);
+}
+
+.task-checkbox.checked {
+  background: var(--grad-primary);
+  border-color: transparent;
+  animation: scale-bounce var(--duration-slow) var(--ease-bounce);
+}
+
+.task-checkbox svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 11px; height: 11px;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 250ms var(--ease-smooth) 50ms;
+}
+.task-checkbox.checked svg { stroke-dashoffset: 0; }
+
+/* Timer Ring */
+.timer-ring-bg {
+  stroke: var(--glass-border);
+  fill: none;
+  stroke-width: 6;
+}
+
+.timer-ring-progress {
+  fill: none;
+  stroke-width: 6;
+  stroke: url(#timerGradient);
+  stroke-linecap: round;
+  transform-origin: center;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset 1s linear;
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
+}
+
+/* Progress bar shimmer */
+.progress-bar-fill {
+  background: var(--grad-primary);
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s ease-in-out infinite;
+  border-radius: var(--radius-full);
+  transform-origin: left;
+  transition: width var(--duration-slow) var(--ease-smooth);
+}
+
+/* Stat number */
+.stat-number {
+  display: inline-block;
+  transition: transform var(--duration-fast), color var(--duration-fast);
+}
+.stat-number.updating {
+  animation: number-pop 400ms var(--ease-bounce);
+}
+
+/* Quote widget */
+.quote-content {
+  transition: opacity var(--duration-base) var(--ease-smooth),
+              transform var(--duration-base) var(--ease-smooth),
+              filter var(--duration-base) var(--ease-smooth);
+}
+.quote-content.fading {
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(3px);
+}
+
+/* Notification dot */
+.notification-dot {
+  width: 8px; height: 8px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Active timer pulse */
+.timer-active .timer-display {
+  animation: ring-tick 1s ease-in-out infinite;
+}
+
+/* Drag */
+.task-item.dragging {
+  opacity: 0.4;
+  transform: scale(0.97);
+  pointer-events: none;
+}
+
+.task-item.drag-over {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px var(--accent-blue-dim);
+  transform: translateY(-2px);
+}
